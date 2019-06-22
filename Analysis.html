@@ -1,0 +1,280 @@
+<html>
+<head>
+<title>Error analysis of system mathematical functions</title>
+</head>
+<body background="background.jpg" text="000020">
+<center><h1>Error analysis of system mathematical functions</h1></center>
+
+<p align=center>
+<a href="http://www.inf.ethz.ch/personal/gonnet/">by Gaston H. Gonnet,</a>
+<a href="http://www.inf.ethz.ch/index.html">ETH, Informatik</a></p>
+
+<p> This is a relatively demanding test for the accuracy
+of mathematical system functions like, sin, exp, lgamma, etc.
+
+It consists of a group of programs, one for each function,
+which can be run on a target machine and will produce a short report 
+about the precision of the function in that machine.
+
+<p>There are two main goals for producing this software:
+first to understand how reliable the numerical evaluations of the
+system you use are,
+and secondly to provide some encouragement to the developers to
+improve some areas with problems.
+
+<p>Currently the programs are in C, but it is not difficult
+to extend them to other languages.  It is also possible to use
+various floating point systems.  The tests are geared to test
+double precision functions.  Neither float nor long doubles are
+considered.
+
+<p>The function is basically tested over various inputs, for which
+we have precomputed the result to higher precision.  These inputs
+are <i>difficult</i>, in various senses.  First, a list of known
+problematic values are tried.  Secondly, values which will evaluate
+to problematic values are also tried.  Finally, ranges of values
+are explored randomly, but for each value, <i>nasty</i> neighbours
+are computed.  A nasty value is one for which the exact result will
+be extremely close to 0.5 ulp.  This is done with a cute application
+of the LLL lattice reduction algorithm.  By testing with these numbers
+we often find the weakest approximations.
+
+<p>The typical summary result for a function looks like:</p>
+
+<div align=center><table border cellpadding=4>
+<tr> <th>function</th>
+     <th>tests</th>
+     <th>max err in ulps</th>
+     <th>argument (max err)</th>
+     <th>value (max err)</th>
+</tr>
+<tr><td align=left><a href=solaris/acos.res>acos</a></td>
+<td align=right>1304</td><td align=right>0.57432</td><td>
+-0.875010530199998859</td><td>2.63625389482078987</td></tr>
+</table></div><br>
+where the function tested is <code>acos</code> (arc cosine), the test had 1304
+points, and the worst error was 0.57432 ulps for the argument -0.875...
+which gave 2.636... as a result.
+Clicking on the function name will show the actual output of the
+program for acos, which contains some more information.
+In particular, the 20 worst errors are shown.  This is very helpful
+to find why these errors may be happening.
+(See for example <a href="axp/j0.res">j0</a> where all the problems
+happen very close to the zeros.).
+
+<p>For a result which is stored in a double precision variable (with no extra
+bits or extended precision), it is impossible to achieve a result
+better than 0.5 ulp (for most reasonable functions).
+In practical terms, a maximum error of 0.51 ulp is a superb result,
+a maximum of 0.6 ulp is a very good result, a maximum of 1 ulp is getting
+to be a bit weak.
+
+<h1>Results available</h1>
+<p>Currently results are available for:
+<div align=center><table border cellpadding=4>
+<tr> <th>hardware</th>
+     <th>operating system</th>
+     <th>compiler</th></tr>
+
+<tr>
+  <td align=left><a href="linux/summary.html">Intel Pentium or AMD PC</a></td>
+  <td align=left>Linux</td>
+  <td align=left><code>gcc -O9 -lm</code></td>
+  </tr>
+<tr>
+  <td align=left><a href="solaris/summary.html">Sun - Sparc</a></td>
+  <td align=left>Solaris</td>
+  <td align=left><code>cc -xO4 -lm</code></td>
+  </tr>
+<tr>
+  <td align=left><a href="axp/summary.html">DEC - Alpha</a></td>
+  <td align=left>OSF1</td>
+  <td align=left><code>cc -O4 -lm</code></td>
+  </tr>
+<tr>
+  <td align=left><a href="irix/summary.html">SGI Octane </a></td>
+  <td align=left>Irix64</td>
+  <td align=left><code>cc -O3 -lm</code></td>
+  </tr>
+
+</table></div><br>
+
+<h1>Model of computation</h1>
+<p>The model of error in the computation is the standard one for
+numerical analysis.  The inputs to the functions (floating point
+numbers) are considered exact rationals.  The result of the function
+computation is compared against the value of the function at the
+exact rational.  The error is measured in ulp (units in the last
+place), that is the values of the results are multiplied by a power
+of the base such that an error in the last significant place is
+an error of 1.
+
+<p>Some functions in some systems suffer from very large ulp errors
+for arguments which produce values close to zero.  This is still a
+serious flaw in our view, but a bit more forgivable by others.
+
+<p>We have included some special functions for reasons
+explained below.</p>
+<div align=center><table border cellpadding=4>
+<tr> <th>name</th>
+     <th>mathematical</th>
+     <th>reason</th></tr>
+<tr><td align=left>INV</td>
+    <td align=left>1/<i>x</i></td>
+    <td align=left>Testing hardware division</td>
+<tr><td align=left>Pix</td>
+    <td align=left>Pi <i>x</i></td>
+    <td align=left>Testing hardware multiplication</td>
+<tr><td align=left>pow2_x</td>
+    <td align=left>2<sup><i>x</i></sup></td>
+    <td align=left>the <code>pow</code> function has two arguments, test one</td>
+<tr><td align=left>powx_275</td>
+    <td align=left><i>x</i><sup>2.75</sup></td>
+    <td align=left>the <code>pow</code> function has two arguments, test the other</td>
+<tr><td align=left>Gamma</td>
+    <td align=left>exp(lgamma(x))</td>
+    <td align=left>the lgamma hides too much error</td>
+</table></div><br>
+
+<p>The computations are done in two ways, first they are done and
+stored in a double (and we try to confuse the compiler so that
+it cannot optimize it away).
+Secondly they are done together with the subtraction of the largest
+part of the result.  The second computation will reveal if the
+accumulator of the computer has more precision than the regular
+doubles.
+This is reported in the full results of each function.
+
+
+<h1>Surprises</h1>
+<p>There are some pleasant surprises and unpleasant ones.
+There are also some hardware characteristics, which will inevitably
+show up in the results.
+
+<p>The zeros of functions cause havoc to most systems.  This is
+well known to be a problem and it is easy to solve by a special
+approximation around the zero.  This may need a careful argument
+reduction, for example for trigonometrics.  The zeros of lgamma
+on the negative range and the zeros of the Bessel functions caused
+havoc uniformly.
+
+<p>``Chapeau'' (as the French would say) for solaris, without any
+extra precision it gets a superb collection of results.
+
+<p>I was surprised to find that some hardware does not round
+correctly for division and multiplication.  This is the case of
+the Pentium/AMD, which get very small ulp &gt; 0.5 both for
+multiplication and division.  It was pointed out to me by
+Rolf Strebel and Brad Lucier that this problem is really due to
+double rounding, first at 80 bits then at 64.  It can be corrected
+by setting the FPU control word to FPU_DOUBLE using the _FPU_SETCW macro.
+With this setting, the <a href="linux64/summary.html"> results</a>
+are much worse for the functions, while correct for mult/div/sqrt.
+
+<p>The results for Pentium/AMD and Linux, outside the pitfalls,
+show a very uniform good behaviour, which can be attributed to
+the extra bits in the accumulator.
+
+<h1>How it is all done</h1>
+<p>If you want to try these tests on your favourite machine,
+you can download the data and compile and run all the programs
+under the directory <code>C</code>.
+
+<p>If your system has <code>make</code>, then your life will
+be much easier, just add the entry at the top of the makefile
+in the same style as the others, name your machine appropriately
+(say xxx) and run:<pre>
+    setenv ARCH xxx
+    make clean
+    make xxx/summary.html
+</pre>
+and your summary file will be completely built.
+
+<p>In all cases you should check that your system is properly
+described in the file <code>float.M</code>.
+A superb tool for finding about your system is
+<a href="http://www.cwi.nl/~steven/enquire.html">enquire</a>.
+It is very portable, will run smoothly and will give you lots
+of information about your hardware and C compiler.  The file
+float.M can be reconstructed from the values obtained from
+enquire.  At this point you will need to have Maple to run
+the program that generates all the new test files for your
+particular hardware.  In this case, <code>make</code> will
+still suffice (but you will have to be more patient).
+
+<p>If you want to include a new function, this is relatively
+trivial to do.  Follow the examples of any of the
+<code>functname.M</code>.  The main function to be run is
+<code>GenerateTestFunction</code> which has five arguments:
+Maple's name of the function, language (C so far), C name
+of the function, set of problematic values, set of test
+ranges (you should give at least one range).  Then add your
+function to the <code>results</code> part of the makefile and
+run it.  That's all.
+
+<p>The programs to be executed are a sandwich of three parts:
+a header (<code>C/header.h</code>) file, a set of constants
+generated by the Maple program <code>GenerateTestFunction</code>
+and a trailer (<code>C/trailer.h</code>) part which contains
+the executing program.
+The header and the trailer are included in the Maple generated
+program, which is then self-contained.
+To learn more details just read the comments of the programs.
+
+<p>To verify a single value, there is a Maple function called
+<code>Check</code> in the file Check.M.  This is useful when
+you suspect about a particular result and would like to know
+exactly how are the argument and results represented.
+Check will print the arguments and values as given and as
+they will (should) be represented in the particular hardware.
+It also does a backwards error analysis.
+
+<p>The technique to find nasty values to evaluate using the
+LLL lattice reduction algorithm is described in this
+<a href="NastyValues.ps">note.</a>
+
+
+<h1>Contributions, copyright, distribution, disclaimers</h1>
+<p>We welcome contributions, i.e. results of running the
+programs in other hardware, fixes, extensions, additional
+comments, or any contribution you feel is necessary to make.
+Please mail them to <a href="mailto:gonnet@inf.ethz.ch">me</a>.
+
+<p>All the material that is under this website is unrestrictedly
+available to the world.
+Copyright &copy; Gaston H. Gonnet.
+
+<p>This program/data is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a>
+for more details.
+
+<p>You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+<p>Neither Gaston Gonnet, nor the ETH (Eidgenössiche Technische Hochschule
+Zürich) nor any of its members assert the accuracy or validity of the
+results presented here, nor are responsible for them in any thinkable
+way.
+The results were obtained using our best efforts from our
+existing computers, but we cannot be responsible for any errors or
+omissions.
+In case of doubt, readers are encouraged to reproduce the results
+obtained here by their own means.
+
+<p>The entire directory can be downloaded from a compressed
+<a href="all.tar.Z">tar file.</a>
+
+<h1>----</h1>
+with best wishes, and hoping that this may be useful for you,
+<a href="http://www.inf.ethz.ch/personal/gonnet/">Gaston Gonnet</a>
+
+</body></html>
+

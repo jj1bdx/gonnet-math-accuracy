@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>Error analysis of some system functions</title>
+</head>
+<body background="../background.jpg" text="000020">
+<h1> Error analysis of some system functions </h1>
+<p>This is the summary of the results run on
+Sun Sep 08 13:11:44 2002 on
+zuse
+<p>Hardware, operating system and compiling command<pre>
+Sun Sparc, Solaris, cc -xO4 -lm</pre>
+<div align=center><table border cellpadding=4>
+<tr> <th>function</th>
+     <th>tests</th>
+     <th>max err in ulps</th>
+     <th>argument (max err)</th>
+     <th>value (max err)</th>
+</tr>
+<tr><td align=left><a href=Gamma.res>Gamma</a></td><td align=right>1575</td><td align=right>1007.51430</td><td>164.040279658791491</td><td>2.46119858953288017e+291</td></tr>
+<tr><td align=left><a href=INV.res>INV</a></td><td align=right>653</td><td align=right>0.50000</td><td>0.999999999999999889</td><td>1.00000000000000022</td></tr>
+<tr><td align=left><a href=Pix.res>Pix</a></td><td align=right>720</td><td align=right>0.50000</td><td>-0.402499911601222171</td><td>-1.26449076535694083</td></tr>
+<tr><td align=left><a href=acos.res>acos</a></td><td align=right>1308</td><td align=right>0.57432</td><td>-0.875010530199998859</td><td>2.63625389482078987</td></tr>
+<tr><td align=left><a href=acosh.res>acosh</a></td><td align=right>1033</td><td align=right>1.49998</td><td>1.12762596520521274</td><td>0.499999999997758571</td></tr>
+<tr><td align=left><a href=asin.res>asin</a></td><td align=right>1344</td><td align=right>0.60844</td><td>0.799176664199999776</td><td>0.925924244284564324</td></tr>
+<tr><td align=left><a href=asinh.res>asinh</a></td><td align=right>1042</td><td align=right>1.49871</td><td>-0.250782692399997009</td><td>-0.24822571472939331</td></tr>
+<tr><td align=left><a href=atan.res>atan</a></td><td align=right>870</td><td align=right>0.53613</td><td>8.12578045399999382</td><td>1.44834691412694605</td></tr>
+<tr><td align=left><a href=atanh.res>atanh</a></td><td align=right>993</td><td align=right>1.50192</td><td>0.118152693200000367</td><td>0.118707151006816211</td></tr>
+<tr><td align=left><a href=cos.res>cos</a></td><td align=right>1418</td><td align=right>0.56013</td><td>0.29415766839999985</td><td>0.957046702218876555</td></tr>
+<tr><td align=left><a href=cosh.res>cosh</a></td><td align=right>1331</td><td align=right>0.78779</td><td>2.00000000000000044</td><td>3.76219569108363272</td></tr>
+<tr><td align=left><a href=erf.res>erf</a></td><td align=right>1277</td><td align=right>0.55029</td><td>0.173003437415309991</td><td>0.19328324616993478</td></tr>
+<tr><td align=left><a href=erfc.res>erfc</a></td><td align=right>1318</td><td align=right>1.55074</td><td>12.1195662651077818</td><td>7.50949328584440654e-66</td></tr>
+<tr><td align=left><a href=exp.res>exp</a></td><td align=right>1333</td><td align=right>0.55726</td><td>0.981195265500000136</td><td>2.66764287861071381</td></tr>
+<tr><td align=left><a href=j0.res>j0</a></td><td align=right>1053</td><td align=right>197004903625365792.00000</td><td>5.52007811028631057</td><td>-6.34590878365763467e-16</td></tr>
+<tr><td align=left><a href=j1.res>j1</a></td><td align=right>1024</td><td align=right>1289786618968880128.00000</td><td>-7.01558666981561885</td><td>-7.97717714238962506e-15</td></tr>
+<tr><td align=left><a href=lgamma.res>lgamma</a></td><td align=right>1408</td><td align=right>4448368812103571.00000</td><td>-2.45702473822080059</td><td>1.11022302462515654e-16</td></tr>
+<tr><td align=left><a href=log.res>log</a></td><td align=right>1135</td><td align=right>0.55045</td><td>397.391652719999797</td><td>5.98492232516636413</td></tr>
+<tr><td align=left><a href=log10.res>log10</a></td><td align=right>1285</td><td align=right>1.51332</td><td>0.999999968847147147</td><td>-1.35295123003145233e-08</td></tr>
+<tr><td align=left><a href=pow2_x.res>pow2_x</a></td><td align=right>1467</td><td align=right>0.51485</td><td>-1019.02662636594437</td><td>1.74750764179756589e-307</td></tr>
+<tr><td align=left><a href=powx_275.res>powx_275</a></td><td align=right>1063</td><td align=right>0.51389</td><td>0.973973848500000017</td><td>0.93004735986465481</td></tr>
+<tr><td align=left><a href=sin.res>sin</a></td><td align=right>1257</td><td align=right>0.57133</td><td>8.19313674250000901</td><td>0.94303608940709005</td></tr>
+<tr><td align=left><a href=sinh.res>sinh</a></td><td align=right>895</td><td align=right>1.50003</td><td>-0.42915449859983873</td><td>-0.442449492910852005</td></tr>
+<tr><td align=left><a href=sqrt.res>sqrt</a></td><td align=right>1055</td><td align=right>0.50000</td><td>0.999999999999999889</td><td>0.999999999999999889</td></tr>
+<tr><td align=left><a href=tan.res>tan</a></td><td align=right>1596</td><td align=right>0.51698</td><td>8.58098668050002367</td><td>-1.12417857971226698</td></tr>
+<tr><td align=left><a href=tanh.res>tanh</a></td><td align=right>792</td><td align=right>1.52273</td><td>-0.481720016489098624</td><td>-0.447620056232185426</td></tr>
+<tr><td align=left><a href=y0.res>y0</a></td><td align=right>976</td><td align=right>1774015495189798144.00000</td><td>7.08605106030177279</td><td>-5.44009282066326705e-15</td></tr>
+<tr><td align=left><a href=y1.res>y1</a></td><td align=right>987</td><td align=right>Inf</td><td>-2.22507385850720188e-308</td><td>-Infinity</td></tr>
+</table></div></body></html>

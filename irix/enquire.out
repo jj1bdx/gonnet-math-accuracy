@@ -1,0 +1,132 @@
+Produced by enquire version 5.1a, CWI, Amsterdam
+   http://www.cwi.nl/~steven/enquire.html 
+Compiler claims to be ANSI C level 1
+
+Compiler names are at least 64 chars long
+Preprocessor names are at least 64 long
+
+SIZES
+char = 8 bits, unsigned
+short=16 int=32 long=32 float=32 double=64 bits 
+long double=128 bits
+char*=32 bits
+int* =32 bits
+func*=32 bits
+Type size_t is unsigned int/long
+Type wchar_t is signed int/long
+
+ALIGNMENTS
+char=1 short=2 int=4 long=4
+float=4 double=8
+long double=16
+char*=4 int*=4 func*=4
+
+CHARACTER ORDER
+short: AB
+int:   ABCD
+long:  ABCD
+
+PROPERTIES OF POINTERS
+Char and int pointer formats seem identical
+Char and function pointer formats seem identical
+Strings are shared
+Type ptrdiff_t is signed int/long
+Dereferencing NULL causes a trap
+
+PROPERTIES OF INTEGRAL TYPES
+Overflow of a short does not generate a trap
+Maximum short = 32767 (= 2**15-1)
+Minimum short = -32768
+Overflow of an int does not generate a trap
+Maximum int = 2147483647 (= 2**31-1)
+Minimum int = -2147483648
+Overflow of a long does not generate a trap
+Maximum long = 2147483647 (= 2**31-1)
+Minimum long = -2147483648
+Maximum unsigned short = 65535
+Maximum unsigned int = 4294967295
+Maximum unsigned long = 4294967295
+
+PROMOTIONS
+unsigned short promotes to signed int/long
+long+unsigned gives unsigned int/long
+
+PROPERTIES OF FLOAT
+Base = 2
+Significant base digits = 24 (= at least 6 decimal digits)
+Arithmetic rounds towards nearest
+   Tie breaking rounds to even
+Smallest x such that 1.0-base**x != 1.0 = -24
+Smallest x such that 1.0-x != 1.0 = 2.98023259e-08
+Smallest x such that 1.0+base**x != 1.0 = -23
+Smallest x such that 1.0+x != 1.0 = 5.96046519e-08
+(Above number + 1.0) - 1.0 = 1.19209290e-07
+Number of bits used for exponent = 8
+Minimum normalised exponent = -126
+Minimum normalised positive number = 1.17549435e-38
+The smallest numbers are normalised
+Maximum exponent = 128
+Maximum number = 3.40282347e+38
+Overflow doesn't seem to generate a trap
+There is an 'infinite' value
+Divide by zero doesn't generate a trap
+Arithmetic uses a hidden bit
+It looks like single length IEEE format
+   though the normalisation is unusual
+
+PROPERTIES OF DOUBLE
+Base = 2
+Significant base digits = 53 (= at least 15 decimal digits)
+Arithmetic rounds towards nearest
+   Tie breaking rounds to even
+Smallest x such that 1.0-base**x != 1.0 = -53
+Smallest x such that 1.0-x != 1.0 = 5.5511151231257839e-17
+Smallest x such that 1.0+base**x != 1.0 = -52
+Smallest x such that 1.0+x != 1.0 = 1.1102230246251568e-16
+(Above number + 1.0) - 1.0 = 2.2204460492503131e-16
+Number of bits used for exponent = 11
+Minimum normalised exponent = -1022
+Minimum normalised positive number = 2.2250738585072014e-308
+The smallest numbers are normalised
+Maximum exponent = 1024
+Maximum number = 1.7976931348623157e+308
+Overflow doesn't seem to generate a trap
+There is an 'infinite' value
+Divide by zero doesn't generate a trap
+Arithmetic uses a hidden bit
+It looks like double length IEEE format
+   though the normalisation is unusual
+
+PROPERTIES OF LONG DOUBLE
+Base = 2
+Significant base digits = 107 (= at least 31 decimal digits)
+Arithmetic rounds towards nearest
+   Tie breaking rounds to even
+Smallest x such that 1.0-base**x != 1.0 = -107
+Smallest x such that 1.0-x != 1.0 = 3.081487911019577707003447599937002e-33
+Smallest x such that 1.0+base**x != 1.0 = -106
+Smallest x such that 1.0+x != 1.0 = 6.162975822039155414006895199874005e-33
+(Above number + 1.0) - 1.0 = 1.232595164407830945955825883254353e-32
+Number of bits used for exponent = 11
+Minimum normalised exponent = -916
+Minimum normalised positive number = 1.805194375864829576069262081173747e-276
+The smallest numbers are not kept normalised
+Smallest unnormalised positive number = 2.225073858507201383090232717332404e-308
+Maximum exponent = 1024
+Maximum number = inf
+
+*** WARNING: Possibly bad output from printf above
+    but value was an unusable number
+
+Overflow doesn't seem to generate a trap
+There is an 'infinite' value
+Divide by zero doesn't generate a trap
+Only 118 of the 128 bits of a long double are actually usedIt doesn't look like IEEE format
+
+Float expressions are evaluated in float precision
+Double expressions are evaluated in double precision
+Long double expressions are evaluated in long double precision
+Memory mallocatable ~= 340 Mbytes
+
+For hints on dealing with the problem above
+   see the section 'TROUBLESHOOTING' in the file enquire.c
