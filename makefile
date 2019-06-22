@@ -1,6 +1,12 @@
 
 CC = echo ARCH not set
 
+ifeq ($(ARCH),darwin)
+	CC= clang
+	OPT= -O3 -ffast-math -ftree-vectorize -march=native
+	TITLE = "Apple macOS, darwin"
+endif
+
 ifeq ($(ARCH),axp)
 	CC= cc
 	OPT= -O4
