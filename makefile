@@ -37,6 +37,12 @@ ifeq ($(ARCH),linux64)
 	TITLE = "Intel Pentium or AMD PC (FPU_DOUBLE set), Linux"
 endif
 
+ifeq ($(ARCH),armv7l)
+	CC=gcc
+	OPT= -O9
+	TITLE = "ARM armv7l, Linux"
+endif
+
 results = $(ARCH)/acos.res \
         $(ARCH)/acosh.res \
         $(ARCH)/asin.res \
