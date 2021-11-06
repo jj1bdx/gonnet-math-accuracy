@@ -39,7 +39,7 @@ endif
 
 ifeq ($(ARCH),armv7l)
 	CC=gcc
-	OPT= -O9
+	OPT= -O3 
 	TITLE = "ARM armv7l, Linux"
 endif
 
