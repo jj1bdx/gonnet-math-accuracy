@@ -18,13 +18,14 @@ struct point { double arg, res, err1, err2; } points[N+1];
 
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 #ifdef FORCE_FPU_DOUBLE
 #include <fpu_control.h>
 #endif
 
 #define SHOW 20
 
-main( int argc, char *argv[] ) {
+int main( int argc, char *argv[] ) {
   struct point *by_err1[N], *by_err2[N], *q;
   struct input_point *p;
   double t, t1, t2;
